@@ -1,7 +1,10 @@
 # Human-LLaVA-8B
 ## DEMO
 
-https://user-images.githubusercontent.com/107622162/198173969-ab970fbb-e4f2-4510-9314-b587b6bda99a.mp4
+
+
+https://github.com/user-attachments/assets/9ce44481-3fa0-4ea7-8f60-1b639f8fa80a
+
 
 ### Introduction
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/ur3sls4faPNlOMZ6sA_qK.png)
