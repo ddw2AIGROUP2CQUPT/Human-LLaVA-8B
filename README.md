@@ -1,13 +1,9 @@
 # Human-LLaVA-8B
 
-## DEMO
 
-
-<video controls autoplay src="https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/TpN2t19Poe5YbHHP8uN7_.mp4"></video>
-
-![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/ur3sls4faPNlOMZ6sA_qK.png)
 
 ### Introduction
+![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/ur3sls4faPNlOMZ6sA_qK.png)
 
 Human-related vision and language tasks are widely applied across various social scenarios.  The latest studies demonstrate that the large vision-language model can enhance the performance of various downstream tasks in visual-language understanding.  Since, models in the general domain often not perform well in the specialized field.  In this study, we train a domain-specific Large Language-Vision model, Human-LLaVA, which aim to construct an unified multimodal Language-Vision Model for Human-related tasks.
 
@@ -44,8 +40,8 @@ processor = AutoProcessor.from_pretrained(model_id,trust_remote_code=True)
 text = "Please describe this picture"
 prompt = "USER: <image>\n" + text + "\nASSISTANT:"
 image_file = "./test1.jpg"
-# raw_image = Image.open(image_file)
-raw_image = Image.open(requests.get(image_file, stream=True).raw)
+raw_image = Image.open(image_file)
+# raw_image = Image.open(requests.get(image_file, stream=True).raw)
 inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(cuda, torch.float16)
 
 output = model.generate(**inputs, max_new_tokens=400, do_sample=False)
