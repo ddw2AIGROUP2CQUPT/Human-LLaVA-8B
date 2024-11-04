@@ -1,4 +1,4 @@
-# Human-LLaVA-8B
+# HumanVLM
 ## DEMO
 
 
