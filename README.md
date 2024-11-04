@@ -20,8 +20,9 @@ human-llava has a good performance in both general and special fields
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/zFuyEPb6ZOt-HHadE2K9-.png)
 
 ## News and Update 🔥🔥🔥
+* Oct.23, 2024.  **🤗[HumanCaption-HQ-311K](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-HQ-311K), is released!👏👏👏**
 * Sep.12, 2024.  **🤗[HumanCaption-10M](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-10M), is released!👏👏👏**
-* Sep.8, 2024. **🤗[HumanLLaVA-llama-3-8B](https://huggingface.co/OpenFace-CQUPT/Human_LLaVA), is released!👏👏👏**
+* Sep.8, 2024.   **🤗[HumanLLaVA-llama-3-8B](https://huggingface.co/OpenFace-CQUPT/Human_LLaVA), is released!👏👏👏**
 
 
 ## 🤗 Transformers
@@ -61,15 +62,11 @@ print(predict)
 #### Instruction Tuning Stage
 **All public data sets have been filtered, and we will consider publishing all processed text in the future**
 
-HumanCaptionHQ-300K(self construct): Coming Soon! 
+[HumanCaption-HQ](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-HQ-311K)(self construct): is released!
 
-Face_hq(self construct):Coming Soon! 
+[FaceCaptionA](https://huggingface.co/datasets/OpenFace-CQUPT/FaceCaption-15M)(self construct): is released!
 
-humanvg_high_reg(self construct):Coming Soon!
-
-humanvg_high_rec(self construct):Coming Soon!
-
-celeba_attribute(self construct): https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
+CelebA: https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 
 ShareGPT4V:https://github.com/InternLM/InternLM-XComposer/blob/main/projects/ShareGPT4V/docs/Data.md
 
@@ -80,6 +77,7 @@ verified_ref3rec: https://huggingface.co/datasets/lucasjin/refcoco/blob/main/ref
 verified_ref3reg: https://huggingface.co/datasets/lucasjin/refcoco/blob/main/ref3rec.json
 
 verified_shikra: https://github.com/shikras/shikra
+
 
 
 
