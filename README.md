@@ -78,7 +78,8 @@ verified_ref3reg: https://huggingface.co/datasets/lucasjin/refcoco/blob/main/ref
 
 verified_shikra: https://github.com/shikras/shikra
 
-
+## Training
+We used xtuner as a training tool, so please go to xtuner official to complete the environment configuration [https://github.com/InternLM/xtuner]. Some 
 
 
 ## Citation
