@@ -17,7 +17,7 @@ Specifically, (1) we first construct **a large-scale and high-quality human-rela
 ## Result
 human-llava has a good performance in both general and special fields
 
-![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/zFuyEPb6ZOt-HHadE2K9-.png)
+![image/png](https://cdn-uploads.huggingface.co/production/uploads/64259db7d3e6fdf87e4792d0/X-712oVUBPXbfLcAz83fb.png)
 
 ## News and Update 🔥🔥🔥
 * Oct.23, 2024.  **🤗[HumanCaption-HQ-311K](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-HQ-311K), is released!👏👏👏**
