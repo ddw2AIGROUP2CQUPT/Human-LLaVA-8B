@@ -11,7 +11,7 @@ visual_encoder_name_or_path = 'google/siglip-so400m-patch14-384'
 
 ## 3. offline pt data
 python ./xtuner/xtuner/tools/process_untokenized_llava_data.py ./HumanLlama3/human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --save-folder ./HumanCaption/pt_hfformat
-参考：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
+refer：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
 
 # multi-node pretrain
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=192.168.24.4 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
