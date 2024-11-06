@@ -113,10 +113,12 @@ NPROC_PER_NODE=8 xtuner attributes_eval meta-llama/Meta-Llama-3-8B-Instruct --vi
 ```
 
 ## chat
+```
 cp ../../chat.py ./
 python chat.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava ./iter_45000_ft --prompt-template llama3_chat --image 1.jpg
 
 python chat_humanllava.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava work_dirs/human_llama3_pretrain/iter_95907_ft --prompt-template llama3_chat --image 1.jpg --anyres-image
+```
 ## convert to gguf
 
 ### 1. Configure the llama.cpp environment
@@ -174,13 +176,14 @@ nano vit/config.json
   }
 }
 `
-
+```
 python ./llama.cpp/examples/llava/convert-image-encoder-to-gguf.py -m vit --llava-projector vit/llava.projector --output-dir vit --clip-model-is-openclip --image-mean 0.5 0.5 0.5 --image-std 0.5 0.5 0.5 --use-f32
-
+```
 
 5. quantize llm model
+```
 /home/ubuntu/san/LYT/UniDetRet-exp/llama.cpp/quantize ./vit/human-llama3.gguf ./vit/human-llama3-q4_0.gguf q4_0
-
+```
 6. And finally we can run the llava-cli using the model version:
 ./llama.cpp/llava-cli -m ./vit/human-llama3.gguf --mmproj ./vit/mmproj-model-f16.gguf --image 1.jpg -c 4096 -e -p "<|start_header_id|>user<|end_header_id|>\n\n<image>\nDescribe this image<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
 
