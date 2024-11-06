@@ -32,8 +32,8 @@ Two ways are available.
 deepspeed --hostfile hostfile --master_port=12345 ../xtuner/xtuner/tools/train.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --launcher pytorch  --deepspeed deepspeed_zero2 --seed 1024
 ```
 ```
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.168.24.5 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.168.24.5 NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=xxx NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=xxx NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
 ```
 ## offline ft data
 ```
