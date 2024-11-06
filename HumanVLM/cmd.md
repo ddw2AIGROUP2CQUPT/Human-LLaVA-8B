@@ -32,7 +32,7 @@ HF_ENDPOINT=https://hf-mirror.com xtuner convert pth_to_hf ../../human_llama3_8b
 python chat.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava ./iter_54000_hf_merge --prompt-template llama3_chat --image test.jpg
 
 # multi-node sft
-两种方式都可以
+Two ways are available.
 deepspeed --hostfile hostfile --master_port=12345 ../xtuner/xtuner/tools/train.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --launcher pytorch  --deepspeed deepspeed_zero2 --seed 1024
 
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.168.24.5 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
@@ -40,16 +40,16 @@ HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.
 
 ## offline ft data
 python /home/ubuntu/san/LYT/UniDetRet-exp/xtuner/xtuner/tools/process_untokenized_llava_data.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --save-folder /home/ubuntu/public-Datasets/HumanSFT/ft_hfformat
-参考：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
+refer：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
 
 ## convert merge ft model
-1. 转换lora权重成hf格式
+1. Convert Lora  to HF format
 xtuner convert pth_to_hf ../../human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py ./iter_45000.pth ./iter_45000_ft 
 
-2. 合并llm lora
+2. llm lora
 xtuner convert merge meta-llama/Meta-Llama-3-8B-Instruct ./iter_45000_ft/llm_adapter ./iter_45000_ft/llm_merge_lora
 
-3. 合并vit lora
+3. vit lora
 xtuner convert merge google/siglip-so400m-patch14-384 ./iter_45000_ft/visual_encoder_adapter ./iter_45000_ft/vit_merge_lora --is-siglip
 
 4. convert to hf format
@@ -117,14 +117,14 @@ python chat.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/sigli
 python chat_humanllava.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava work_dirs/human_llama3_pretrain/iter_95907_ft --prompt-template llama3_chat --image 1.jpg --anyres-image
 ## convert to gguf
 
-### 1. 配置llama.cpp环境
+### 1. Configure the llama.cpp environment
 ```shell
 git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
 make
 ```
 
-### 2. 转换成gguf
+### 2.convert to gguf
 ```shell
 cd ./work_dirs/human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune
 1. Use llava-surgery-v2.py to split the LLaVA model to LLaMA and multimodel projector constituents:
