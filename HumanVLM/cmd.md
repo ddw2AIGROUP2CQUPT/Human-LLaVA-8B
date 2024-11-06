@@ -1,67 +1,69 @@
-# pretrain human-llama3
-## 1. modified config
-xtuner copy-cfg llava_llama3_8b_instruct_clip_vit_large_p14_336_e1_gpu8_sharegpt4v_pretrain .
-mv llava_llama3_8b_instruct_clip_vit_large_p14_336_e1_gpu8_sharegpt4v_pretrain_copy.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py
-
-## 2. change vision model
-CLIPImageProcessor -> SiglipImageProcessor
-CLIPVisionModel -> SiglipVisionModel
-visual_encoder_name_or_path = 'google/siglip-so400m-patch14-384'
-
-
-## 3. offline pt data
+# pretrain humanVLM
+## offline pt data
+```
 python ./xtuner/xtuner/tools/process_untokenized_llava_data.py ./HumanLlama3/human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --save-folder ./HumanCaption/pt_hfformat
+```
 refer：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
 
 # multi-node pretrain
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=192.168.24.4 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=192.168.24.4 NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
-
+```
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
+```
 deepspeed --hostfile hostfile --master_port=12345 ../xtuner/xtuner/tools/train.py HumanLlama3/human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --launcher pytorch  --deepspeed deepspeed_zero2 --seed 1024
 
 ## resume
 set true to resume in  human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py 
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=192.168.24.4 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024 --resume ./work_dirs/human_llama3_8b_instruct_siglip_vit_large_p14_336_e1_gpu8_pretrain/iter_54000.pth
-
-HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=192.168.24.4 NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024 --resume ./work_dirs/human_llama3_8b_instruct_siglip_vit_large_p14_336_e1_gpu8_pretrain/iter_54000.pth
-
+```
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024 --resume ./work_dirs/human_llama3_8b_instruct_siglip_vit_large_p14_336_e1_gpu8_pretrain/iter_54000.pth
+HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024 --resume ./work_dirs/human_llama3_8b_instruct_siglip_vit_large_p14_336_e1_gpu8_pretrain/iter_54000.pth
+```
 ## merge pretrain model
+```
 HF_ENDPOINT=https://hf-mirror.com xtuner convert pth_to_hf ../../human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py ./iter_45000.pth ./iter_45000_pretrain
-
+```
 ## pretrain chat
+```
 python chat.py meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava ./iter_54000_hf_merge --prompt-template llama3_chat --image test.jpg
-
+```
 # multi-node sft
 Two ways are available.
+```
 deepspeed --hostfile hostfile --master_port=12345 ../xtuner/xtuner/tools/train.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --launcher pytorch  --deepspeed deepspeed_zero2 --seed 1024
-
+```
+```
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.168.24.5 NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=12345 ADDR=192.168.24.5 NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --deepspeed deepspeed_zero2 --seed 1024
-
+```
 ## offline ft data
+```
 python /home/ubuntu/san/LYT/UniDetRet-exp/xtuner/xtuner/tools/process_untokenized_llava_data.py human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py --save-folder /home/ubuntu/public-Datasets/HumanSFT/ft_hfformat
+```
 refer：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scale_dataset.html#llava
 
 ## convert merge ft model
 1. Convert Lora  to HF format
+```
 xtuner convert pth_to_hf ../../human_llama3_8b_instruct_siglip_so400m_large_p14_384_lora_e1_gpu8_finetune.py ./iter_45000.pth ./iter_45000_ft 
-
+```
 2. llm lora
+```
 xtuner convert merge meta-llama/Meta-Llama-3-8B-Instruct ./iter_45000_ft/llm_adapter ./iter_45000_ft/llm_merge_lora
-
+```
 3. vit lora
+```
 xtuner convert merge google/siglip-so400m-patch14-384 ./iter_45000_ft/visual_encoder_adapter ./iter_45000_ft/vit_merge_lora --is-siglip
-
+```
 4. convert to hf format
+```
 cp ../../convert_xtuner_weights_to_hf.py ./
 python ./convert_xtuner_weights_to_hf.py --text_model_id ./iter_45000_ft/llm_merge_lora --vision_model_id ./iter_45000_ft/vit_merge_lora --projector_weight ./iter_45000_ft/projector/model.safetensors --save_path ./iter_45000_ft 
-
-
+```
 5. convert to llava format
-
+```
 cp ../../convert_xtuner_weights_to_llava.py ./
 python ./convert_xtuner_weights_to_llava.py --text_model_id ./iter_45000_ft/llm_merge_lora --vision_model_id ./iter_45000_ft/vit_merge_lora --projector_weight ./iter_45000_ft/projector/model.safetensors --save_path ./iter_45000_llava
-
+```
 
 ## eval
 **MMB**
@@ -75,9 +77,9 @@ xtuner mmbench meta-llama/Meta-Llama-3-8B-Instruct \
 --is-siglip
 ```
 **POPE**
-
+```
 NPROC_PER_NODE=8 xtuner eval_pope meta-llama/Meta-Llama-3-8B-Instruct --visual-encoder google/siglip-so400m-patch14-384 --llava /home/ubuntu/san/LYT/UniDetRet-exp/HumanLlama3/work_dirs/human_llama3_8b_siglip_base_attr_keypoint_new_0616/iter_45000_ft --prompt-template llama3_chat --data-path /home/ubuntu/san/LYT/UniDetRet-exp/Bunny/eval/pope/coco_pope_random.jsonl --work-dir /home/ubuntu/san/LYT/UniDetRet-exp/HumanLlama3/eval/logs/pope --launcher pytorch
-
+```
 ### REC
 
 **HumanVLM**
