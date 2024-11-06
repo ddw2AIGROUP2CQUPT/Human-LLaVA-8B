@@ -10,8 +10,9 @@ refer：https://xtuner.readthedocs.io/zh-cn/latest/acceleration/train_large_scal
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=0 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
 HF_ENDPOINT=https://hf-mirror.com NPROC_PER_NODE=8 NNODES=2 PORT=11404 ADDR=xxx NODE_RANK=1 xtuner train human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --deepspeed deepspeed_zero2 --seed 1024
 ```
+```
 deepspeed --hostfile hostfile --master_port=12345 ../xtuner/xtuner/tools/train.py HumanLlama3/human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py --launcher pytorch  --deepspeed deepspeed_zero2 --seed 1024
-
+```
 ## resume
 set true to resume in  human_llama3_8b_instruct_siglip_so400m_large_p14_384_e1_gpu8_pretrain.py 
 ```
@@ -176,14 +177,14 @@ nano vit/config.json
   }
 }
 `
-```
+
 python ./llama.cpp/examples/llava/convert-image-encoder-to-gguf.py -m vit --llava-projector vit/llava.projector --output-dir vit --clip-model-is-openclip --image-mean 0.5 0.5 0.5 --image-std 0.5 0.5 0.5 --use-f32
-```
+
 
 5. quantize llm model
-```
+
 /home/ubuntu/san/LYT/UniDetRet-exp/llama.cpp/quantize ./vit/human-llama3.gguf ./vit/human-llama3-q4_0.gguf q4_0
-```
+
 6. And finally we can run the llava-cli using the model version:
 ./llama.cpp/llava-cli -m ./vit/human-llama3.gguf --mmproj ./vit/mmproj-model-f16.gguf --image 1.jpg -c 4096 -e -p "<|start_header_id|>user<|end_header_id|>\n\n<image>\nDescribe this image<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
 
