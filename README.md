@@ -79,13 +79,22 @@ verified_ref3reg: https://huggingface.co/datasets/lucasjin/refcoco/blob/main/ref
 verified_shikra: https://github.com/shikras/shikra
 
 ## Training
-We used xtuner as a training tool, so please go to xtuner official to complete the environment configuration [https://github.com/InternLM/xtuner]. Some 
+We used xtuner as a training tool, so please go to xtuner official to complete the environment configuration [https://github.com/InternLM/xtuner]. 
+You can refer to some helpful [commands]().
 
 
 ## Citation
 
 ```
-Coming soon!!!
+@misc{dai2024humanvlmfoundationhumanscenevisionlanguage,
+      title={HumanVLM: Foundation for Human-Scene Vision-Language Model}, 
+      author={Dawei Dai and Xu Long and Li Yutang and Zhang Yuanhui and Shuyin Xia},
+      year={2024},
+      eprint={2411.03034},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2411.03034}, 
+}
 ```
 
 ## contact
