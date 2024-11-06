@@ -80,7 +80,7 @@ verified_shikra: https://github.com/shikras/shikra
 
 ## Training
 We used xtuner as a training tool, so please go to xtuner official to complete the environment configuration [https://github.com/InternLM/xtuner]. 
-You can refer to some helpful [commands](https://github.com/ddw2AIGROUP2CQUPT/HumanVLM/edit/main/HumanVLM/cmd.md).
+You can refer to some helpful [commands](https://github.com/ddw2AIGROUP2CQUPT/HumanVLM/blob/main/HumanVLM/cmd.md).
 
 
 ## Citation
