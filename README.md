@@ -22,7 +22,7 @@ human-llava has a good performance in both general and special fields
 ## News and Update 🔥🔥🔥
 * Oct.23, 2024.  **🤗[HumanCaption-HQ-311K](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-HQ-311K), is released!👏👏👏**
 * Sep.12, 2024.  **🤗[HumanCaption-10M](https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-10M), is released!👏👏👏**
-* Sep.8, 2024.   **🤗[HumanLLaVA-llama-3-8B](https://huggingface.co/OpenFace-CQUPT/Human_LLaVA), is released!👏👏👏**
+* Sep.8, 2024.   **🤗[HumanVLM](https://huggingface.co/OpenFace-CQUPT/Human_LLaVA), is released!👏👏👏**
 
 
 ## 🤗 Transformers
